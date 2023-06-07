@@ -1,0 +1,63 @@
+class MyStack {
+
+    Queue<Integer> q1;
+    Queue<Integer> q2;
+
+    public MyStack() {
+
+        q1=new LinkedList<>();
+        q2=new LinkedList<>();
+        
+    }
+    
+    public void push(int x) {
+
+        q2.add(x);
+
+        //step 1 and 2 combined
+        while(!q1.isEmpty()){
+
+            //jo q1 se remove hoga vo q2 mein jayega and it will remove the top most element
+            q2.add(q1.remove());
+
+        }
+        //step 3-put all elements of q2 back to q1
+        while(!q2.isEmpty()){
+            q1.add(q2.remove());
+        }
+        
+    }
+    
+    public int pop() {
+        int top=q1.remove();
+        return top;
+        
+    }
+    
+    public int top() {
+
+        int t=q1.peek();
+        return t;        
+    }
+    
+    public boolean empty() {
+
+        if(q1.isEmpty() && q2.isEmpty()){
+            return true;
+        }else{
+            return false;
+        }
+
+
+        
+    }
+}
+
+/**
+ * Your MyStack object will be instantiated and called as such:
+ * MyStack obj = new MyStack();
+ * obj.push(x);
+ * int param_2 = obj.pop();
+ * int param_3 = obj.top();
+ * boolean param_4 = obj.empty();
+ */
