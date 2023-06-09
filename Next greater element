@@ -1,0 +1,28 @@
+import java.util.* ;
+import java.io.*; 
+
+public class Solution {
+	
+	public static int[] nextGreater(int[] arr, int n) {	
+		Stack<Integer> s=new Stack<>();
+		int next[]=new int[n];
+
+		for(int i=n-1;i>=0;i--){
+			//stack mein index push hoga naki element- so s.peek() gives me the index of element
+			while(!s.isEmpty() && arr[i]>=arr[s.peek()]){
+				s.pop();
+			}
+
+			if(s.isEmpty()){
+				next[i]=-1;
+			}else{
+				next[i]=arr[s.peek()];
+			}
+
+			s.push(i);//pushing the index into stack and not element
+		}
+		return next;
+		
+	}
+
+}
