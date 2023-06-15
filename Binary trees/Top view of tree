@@ -1,1 +1,82 @@
+class infopair{
+		Node node;
+		int hd;
 
+		public infopair(Node node,int hd){
+			this.node=node;
+			this.hd=hd;
+		}
+	}
+class Solution
+{
+    //Function to return a list of nodes visible from the top view 
+    //from left to right in Binary Tree.
+    
+    static class infopair{
+		Node node;
+		int hd;
+
+		public infopair(Node node,int hd){
+			this.node=node;
+			this.hd=hd;
+		}
+	}
+    static ArrayList<Integer> topView(Node root)
+    {
+        // add your code
+        ArrayList<Integer> ans=new ArrayList<>();
+		
+        if (root == null)
+            return ans;
+        
+		Queue<infopair> q=new LinkedList<>();
+		HashMap<Integer,Node> map=new HashMap<>();
+
+		int min=0;
+		int max=0;
+
+		q.add(new infopair(root,0));//adding an infopair object to the queue
+		q.add(null);
+
+		//level order
+
+		while(!q.isEmpty()){
+			infopair curr=q.remove();
+
+			if(curr==null){
+				if(q.isEmpty()){
+					break;
+				}else{
+					q.add(null);
+				}
+			}else{
+			    // to track
+		if(!map.containsKey(curr.hd)){
+			map.put(curr.hd,curr.node);
+		}
+
+		//checking the left and right child of the node and if it is not null then add it to the queue as infopair object
+
+		if(curr.node.left!=null){
+			q.add(new infopair(curr.node.left,curr.hd-1));
+			min=Math.min(min,curr.hd-1);
+		}
+
+		if(curr.node.right!=null){
+			q.add(new infopair(curr.node.right,curr.hd+1));
+			max=Math.max(max,curr.hd+1);
+		}
+//no need to compare min and max because always min will not be affected by
+//any of the right child value similary maximum will never affected by any left child value as all of them in that side are negative
+			    
+			}
+
+	}
+
+		for(int i=min;i<=max;i++){
+			ans.add(map.get(i).data);
+		}
+		return ans;
+        
+    }
+}
