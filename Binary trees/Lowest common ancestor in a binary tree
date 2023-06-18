@@ -1,0 +1,59 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+
+        ArrayList<TreeNode> path1=new ArrayList<>();
+        ArrayList<TreeNode> path2=new ArrayList<>();
+
+        getpath(root,p,path1);
+        getpath(root,q,path2);
+
+        int i=0;
+        for(;i<path1.size() && i<path2.size();i++){
+            //jab tak unequal nodes na aa jaye tab tk this loop will run
+            if(path1.get(i)!=path2.get(i)){
+                break;
+            }
+        }
+        //as i is a global variable when the loop breaks it will be pointing to unequal nodes so we get the i-1 node which is the last common node
+        TreeNode lca=path1.get(i-1);
+        return lca;
+    }
+
+    public boolean getpath(TreeNode root,TreeNode x,ArrayList<TreeNode> path){
+
+        if(root==null){
+            return false;
+        }
+
+        path.add(root);
+        //if root is the node that we want to find path for
+        if(root.val==x.val){
+            return true;
+        }
+        //if not we go to left and right subtree of the root
+
+        boolean left=getpath(root.left,x,path);
+        boolean right=getpath(root.right,x,path);
+
+        //if we have found the node in any of the part of tree i.e, left or right one of them will be true so we return true
+
+        if(left || right){
+            return true;
+        }
+
+        //removing the node which is not part of the path nor left nor right subtree
+
+        path.remove(path.size()-1);
+        return false;
+
+    }
+}
