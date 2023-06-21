@@ -28,9 +28,11 @@ class Solution {
         if(node==null){
             return 0;
         }
+       //0 is to handle the negative sum 
         int leftsum=Math.max(0,maxPath(node.left,max));
         int rightsum=Math.max(0,maxPath(node.right,max));
 
+      // Logic -  leftsum+rightsum+node.val and then keep updating that sum
         max[0]=Math.max(max[0],leftsum+rightsum+node.val);
 
         return node.val + Math.max(leftsum,rightsum);
